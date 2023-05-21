@@ -39,8 +39,18 @@ function! translator#action#window(translations) abort
     endif
   endfor
   if len(content)>3
-      echo content[3:]
-      let @"=join(content[3:],"\n")."\n"
+"      echo content[3:]
+      let i=3
+      let str=""
+      while i<len(content)
+          if len(content[i]) > 1
+            let str=l:str.l:content[i][3:]."\n"
+          endif
+
+          let i+=1
+      endwhile
+"      echo str
+      let @"=l:str
 "      let @"="\n"+@"
    endif
   call translator#logger#log(content)
