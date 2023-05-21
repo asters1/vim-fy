@@ -38,6 +38,11 @@ function! translator#action#window(translations) abort
       endfor
     endif
   endfor
+  if len(content)>3
+      echo content[3:]
+      let @"="\n".join(content[3:],"\n")
+"      let @"="\n"+@"
+   endif
   call translator#logger#log(content)
   call translator#window#open(content)
 endfunction
