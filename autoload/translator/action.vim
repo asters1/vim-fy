@@ -40,7 +40,7 @@ function! translator#action#window(translations) abort
   endfor
   if len(content)>3
       echo content[3:]
-      let @"="\n".join(content[3:],"\n")
+      let @"=join(content[3:],"\n")."\n"
 "      let @"="\n"+@"
    endif
   call translator#logger#log(content)
