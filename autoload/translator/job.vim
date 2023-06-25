@@ -21,7 +21,7 @@ else
 endif
 
 function! translator#job#jobstart(cmd, type) abort
-  echo a:cmd
+  " echo a:cmd
   let g:translator_status = 'translating'
   let s:stdout_save = {}
   if has('nvim')
