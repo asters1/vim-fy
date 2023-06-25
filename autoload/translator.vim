@@ -4,23 +4,20 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-let s:py_file = expand('<sfile>:p:h') . '/../script/translator.py'
+let s:translator_path= expand('<sfile>:p:h') . '/../script/'
+" echo s:translator_path
+ let s:translator_run=s:translator_path.g:translator_tool
+ " echo s:translator_run
 
-if !exists('s:python_executable')
-  if exists('g:python3_host_prog') && executable('g:python3_host_prog')
-    let s:python_executable = g:python3_host_prog
-  elseif executable('python3')
-    let s:python_executable = 'python3'
-  elseif executable('python')
-    let s:python_executable = 'python'
-  else
-    call translator#util#show_msg('python is required but not found', 'error')
-    finish
-  endif
+let s:py_file = expand('<sfile>:p:h') . '/../script/translator.py'
+if stridx(s:translator_run, "python") != -1
+  let s:translator_run=g:translator_tool
+else
+  let s:py_file=""
 endif
 
-if stridx(s:python_executable, ' ') >= 0
-  let s:python_executable = shellescape(s:python_executable)
+if stridx(s:translator_run, ' ') >= 0
+  let s:translator_run = shellescape(s:translator_run)
 endif
 if stridx(s:py_file, ' ') >= 0
   let s:py_file = shellescape(s:py_file)
@@ -35,7 +32,7 @@ endfunction
 
 function! translator#translate(options, displaymode) abort
   let cmd = [
-        \ s:python_executable,
+        \ s:translator_run,
         \ s:py_file,
         \ '--target_lang', a:options.target_lang,
         \ '--source_lang', a:options.source_lang,
