@@ -13,7 +13,7 @@ Plug 'voldikss/vim-fy'
   let g:translator_default_engines = [
          \ 'google']
 ```
-#### 本插件新增拷贝翻译后的文本
+## 本插件新增拷贝翻译后的文本
 
 ## 自定义(实际上就是一个命令行工具)
 - 如果你要自定义翻译工具,请对照以下格式来操作。
