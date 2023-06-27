@@ -59,6 +59,6 @@ function! translator#translate(options, displaymode) abort
     let cmd += [printf("--options='%s'", join(g:translator_translate_shell_options, ','))]
   endif
   call translator#logger#log(join(cmd, ' '))
-    echo join(cmd,' ')
+    " echo join(cmd,' ')
   call translator#job#jobstart(cmd, a:displaymode)
 endfunction
