@@ -7,11 +7,16 @@ Plug 'voldikss/vim-fy'
 ## 配置
 ```
 " 需要设置hosts--->108.177.97.100 translate.googleapis.com
-  let g:translator_tool='python3' "可以自定义为二进制文件，但是需要将其放入script脚本下
-  nmap <silent> fy <Plug>TranslateW
-  vmap <silent> fy <Plug>TranslateWV
-  let g:translator_default_engines = [
-         \ 'google']
+ " let g:translator_tool='fy'
+ " let g:translator_tool='bash'
+  let g:translator_tool='python3'
+ "是否开启shell命令，比如python3 bash之类的。不开启的话就默认script里面的二进制文件。g:translator_tool也要改成你的二进制文件1为开启，其他为关闭.
+ let g:translator_command=1
+ let g:translator_file='translator.py'
+ nmap <silent> fy <Plug>TranslateW
+ vmap <silent> fy <Plug>TranslateWV
+ let g:translator_default_engines = [
+            \ 'google']
 ```
 ## 本插件新增拷贝翻译后的文本
 
@@ -27,7 +32,6 @@ python3 ./translator.py --target_lang zh --source_lang auto "The API can be used
 - 要翻译成什么语言
 ## --source_lang
 - 翻译什么语言
-## 翻译文本加了双引号
 ## --engines 为翻译引擎。
 - 可以有多个需要个vim中配置相对应
 
