@@ -34,6 +34,7 @@ type Translate struct {
 }
 
 func Fyinit() {
+
 	for i := 1; i < len(os.Args); i++ {
 		switch {
 		case os.Args[i] == "--target_lang":
@@ -41,8 +42,15 @@ func Fyinit() {
 			i = i + 1
 		case os.Args[i] == "--source_lang":
 			source_lang = os.Args[i+1]
-			i = i + 2
-			text = os.Args[i]
+			for i = i + 2; i < len(os.Args); i++ {
+				if os.Args[i] == "--engines" {
+					// fmt.Println(os.Args[i-1])
+
+					break
+				}
+				text = text + os.Args[i] + " "
+			}
+			// text = os.Args[i]
 		case os.Args[i] == "--engines":
 			for i = i + 1; i < len(os.Args); i++ {
 				engines = append(engines, os.Args[i])
@@ -64,8 +72,8 @@ func GoogleRequest(url string, i int) {
 
 }
 
+// how are you
 func GoogleTranslator(engine string, source_lang string, target_lang string, text string) {
-
 	text_list := strings.Split(text, "|||")
 	url_list := []string{}
 	for i := 0; i < len(text_list); i++ {

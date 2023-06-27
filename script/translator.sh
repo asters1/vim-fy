@@ -1,6 +1,7 @@
 #!/bin/bash
 # $@是所有参数
 #cpu架构
+# echo $@ > command.txt
 jg=$(uname -a | awk -F " " '{print $(NF-1)}')
 sys=$(uname -a | awk -F " " '{print $(NF)}')
 if [ $sys == "GNU/Linux" ];then
