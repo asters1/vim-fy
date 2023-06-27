@@ -5,22 +5,34 @@
 " ============================================================================
 
 let s:translator_path= expand('<sfile>:p:h') . '/../script/'
-" echo s:translator_path
- let s:translator_run=s:translator_path.g:translator_tool
- " echo s:translator_run
+if !(exists('g:translator_file'))
+  let g:translator_file = expand('<sfile>:p:h') . '/../script/translator.py'
+ let g:translator_command = 0
+else
+  let g:translator_file=s:translator_path.g:translator_file
+endif
+if g:translator_command == 1
+  let s:translator_path=''
+else
+  let g:translator_file=''
+endif
 
-let s:py_file = expand('<sfile>:p:h') . '/../script/translator.py'
+" echo s:translator_path
+let s:translator_run=s:translator_path.g:translator_tool
+" echo s:translator_file
+" echo s:translator_run
+
+
+
 if stridx(s:translator_run, "python") != -1
   let s:translator_run=g:translator_tool
-else
-  let s:py_file=""
 endif
 
 if stridx(s:translator_run, ' ') >= 0
   let s:translator_run = shellescape(s:translator_run)
 endif
-if stridx(s:py_file, ' ') >= 0
-  let s:py_file = shellescape(s:py_file)
+if stridx(g:translator_file, ' ') >= 0
+  let g:translator_file = shellescape(g:translator_file)
 endif
 
 function! translator#start(displaymode, bang, range, line1, line2, argstr) abort
@@ -33,7 +45,7 @@ endfunction
 function! translator#translate(options, displaymode) abort
   let cmd = [
         \ s:translator_run,
-        \ s:py_file,
+        \ g:translator_file,
         \ '--target_lang', a:options.target_lang,
         \ '--source_lang', a:options.source_lang,
         \ a:options.text,
@@ -47,5 +59,6 @@ function! translator#translate(options, displaymode) abort
     let cmd += [printf("--options='%s'", join(g:translator_translate_shell_options, ','))]
   endif
   call translator#logger#log(join(cmd, ' '))
+    echo join(cmd,' ')
   call translator#job#jobstart(cmd, a:displaymode)
 endfunction
